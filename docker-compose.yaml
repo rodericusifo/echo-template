@@ -1,0 +1,73 @@
+version: "3.9"
+services:
+  app:
+    container_name: golang_echo_container
+    tty: true
+    build: .
+    ports:
+      - 8083:8081
+    restart: on-failure
+    volumes:
+      - .:/app
+    depends_on:
+      - postgresdb
+    networks:
+      - echo_backend
+
+  # mysqldb:
+  #   image: mysql:latest
+  #   container_name: mysql_echo_container
+  #   environment:
+  #     - MYSQL_DATABASE=${DATABASE_MYSQL_NAME}
+  #     - MYSQL_USER=${DATABASE_MYSQL_USERNAME}
+  #     - MYSQL_PASSWORD=${DATABASE_MYSQL_PASSWORD}
+  #     - MYSQL_ROOT_PASSWORD=password
+  #     - TZ=Asia/Jakarta
+  #   ports:
+  #     - 3308:3306
+  #   expose:
+  #     - 3306
+  #   volumes:
+  #     - mysql_echo_data:/var/lib/mysql
+  #   networks:
+  #     - echo_backend
+
+  postgresdb:
+    image: postgres:latest
+    container_name: postgres_echo_container
+    environment:
+      - POSTGRES_DB=${DATABASE_POSTGRES_NAME}
+      - POSTGRES_USER=${DATABASE_POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_POSTGRES_PASSWORD}
+    ports:
+      - 5434:5432
+    expose:
+      - 5432
+    volumes:
+      - postgres_echo_data:/var/lib/postgresql/data
+    networks:
+      - echo_backend
+
+  redisdb:
+    image: redis/redis-stack-server:latest
+    container_name: redis_echo_container
+    environment:
+      - REDIS_ARGS=--requirepass ${DATABASE_CACHE_REDIS_PASSWORD}
+    ports:
+      - 6381:6379
+    expose:
+      - 6379
+    volumes:
+      - redis_echo_data:/data
+    networks:
+      - echo_backend
+
+volumes:
+  # mysql_echo_data:
+  postgres_echo_data:
+  redis_echo_data:
+
+# Networks to be created to facilitate communication between containers
+networks:
+  echo_backend:
+    driver: bridge
