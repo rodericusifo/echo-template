@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"testing"
 
-	"bou.ke/monkey"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
@@ -15,8 +14,8 @@ import (
 	"github.com/rodericusifo/echo-template/internal/app/model/database/sql"
 	"github.com/rodericusifo/echo-template/internal/pkg/constant"
 	"github.com/rodericusifo/echo-template/internal/pkg/types"
-	"github.com/rodericusifo/echo-template/internal/pkg/util"
 
+	mocks_pkg "github.com/rodericusifo/echo-template/mocks-pkg"
 	pkg_types "github.com/rodericusifo/echo-template/pkg/types"
 )
 
@@ -161,9 +160,9 @@ func TestAuthService_LoginAuth(t *testing.T) {
 			},
 			before: func() {
 				{
-					monkey.Patch(util.GenerateJWTTokenFromClaims, func(claims *types.JwtCustomClaims) (string, error) {
+					mocks_pkg.GenerateJWTTokenFromClaimsUtil = func(claims *types.JwtCustomClaims) (string, error) {
 						return "", errors.New("error generate token from claims")
-					})
+					}
 				}
 				{
 					var (
@@ -191,11 +190,7 @@ func TestAuthService_LoginAuth(t *testing.T) {
 					mockUserResource.On("GetUser", arg1).Return(result, err).Once()
 				}
 			},
-			after: func() {
-				{
-					monkey.Unpatch(util.GenerateJWTTokenFromClaims)
-				}
-			},
+			after: func() {},
 		},
 		{
 			desc: "[SUCCESS]_success_login_auth",
@@ -213,9 +208,9 @@ func TestAuthService_LoginAuth(t *testing.T) {
 			},
 			before: func() {
 				{
-					monkey.Patch(util.GenerateJWTTokenFromClaims, func(claims *types.JwtCustomClaims) (string, error) {
+					mocks_pkg.GenerateJWTTokenFromClaimsUtil = func(claims *types.JwtCustomClaims) (string, error) {
 						return mockJWTToken, nil
-					})
+					}
 				}
 				{
 					var (
@@ -243,11 +238,7 @@ func TestAuthService_LoginAuth(t *testing.T) {
 					mockUserResource.On("GetUser", arg1).Return(result, err).Once()
 				}
 			},
-			after: func() {
-				{
-					monkey.Unpatch(util.GenerateJWTTokenFromClaims)
-				}
-			},
+			after: func() {},
 		},
 	}
 	for _, tC := range testCases {

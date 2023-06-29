@@ -9,8 +9,8 @@ import (
 	"github.com/rodericusifo/echo-template/internal/app/core/auth/service/dto/input"
 	"github.com/rodericusifo/echo-template/internal/app/core/auth/service/dto/output"
 	"github.com/rodericusifo/echo-template/internal/pkg/types"
-	"github.com/rodericusifo/echo-template/internal/pkg/util"
 
+	mocks_pkg "github.com/rodericusifo/echo-template/mocks-pkg"
 	pkg_types "github.com/rodericusifo/echo-template/pkg/types"
 )
 
@@ -29,7 +29,7 @@ func (s *AuthService) LoginAuth(payload *input.LoginAuthDTO) (*output.LoginAuthD
 		return nil, err
 	}
 
-	match := util.CheckHashPassword(payload.Password, userModelRes.Password)
+	match := mocks_pkg.CheckHashPasswordUtil(payload.Password, userModelRes.Password)
 	if !match {
 		return nil, echo.NewHTTPError(http.StatusUnauthorized, "email and password not match")
 	}
@@ -41,7 +41,7 @@ func (s *AuthService) LoginAuth(payload *input.LoginAuthDTO) (*output.LoginAuthD
 		Role:  userModelRes.Role,
 	}
 
-	token, err := util.GenerateJWTTokenFromClaims(claims)
+	token, err := mocks_pkg.GenerateJWTTokenFromClaimsUtil(claims)
 	if err != nil {
 		return nil, err
 	}

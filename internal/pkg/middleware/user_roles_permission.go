@@ -23,7 +23,7 @@ func UserRolesPermission(roles ...constant.UserRole) echo.MiddlewareFunc {
 			if len(roles) > 0 {
 				allowed := util.CheckSliceContain(roles, reqUser.Role)
 				if !allowed {
-					return echo.NewHTTPError(echo.ErrUnauthorized.Code, fmt.Sprint("user role not allowed. allowed roles:", roles))
+					return echo.NewHTTPError(echo.ErrUnauthorized.Code, fmt.Sprintf("user role not allowed. current role: %v. allowed roles: %v", reqUser.Role, roles))
 				}
 			}
 

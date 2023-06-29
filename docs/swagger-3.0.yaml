@@ -14,202 +14,238 @@ servers:
     port:
       enum:
         - '8081'
-        - '8082'
+        - '8083'
       default: '8081'
       description: base url port
+tags:
+  - name: Auth
+  - name: Employee
 paths:
+  /auth/register:
+      post:
+        tags:
+          - Auth
+        summary: Register Auth
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: someone
+                  email: someone@gmail.com
+                  password: p4ssw0rd
+                  role: NON_ADMIN
+        responses:
+          '200':
+            description: OK
+            headers:
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json; charset=UTF-8
+              Vary:
+                schema:
+                  type: string
+                  example: Origin
+              X-Request-Id:
+                schema:
+                  type: string
+                  example: 1vEMnyJrAWOcaq9z74ht6gQumkrzygUP
+              Date:
+                schema:
+                  type: string
+                  example: Thu, 29 Jun 2023 09:48:47 GMT
+              Content-Length:
+                schema:
+                  type: integer
+                  example: '51'
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  success: true
+                  message: auth register success
+          '400':
+            description: Bad Request
+            headers:
+              Date:
+                schema:
+                  type: string
+                  example: Thu, 29 Jun 2023 10:00:44 GMT
+              Content-Type:
+                schema:
+                  type: string
+                  example: application/json
+              Content-Length:
+                schema:
+                  type: integer
+                  example: '230'
+              X-Request-Id:
+                schema:
+                  type: string
+                  example: 68cebf6f-8559-4d4f-a616-cc7c8d53aaa0
+              Vary:
+                schema:
+                  type: string
+                  example: Origin
+              Access-Control-Allow-Origin:
+                schema:
+                  type: string
+                  example: '*'
+            content:
+              application/json:
+                schema:
+                  type: object
+                example:
+                  success: false
+                  message: validation error
+                  error:
+                    - failed_field: RegisterAuthRequestBody.Name
+                      tag: required
+                      error: >-
+                        Key: 'RegisterAuthRequestBody.Name' Error:Field validation
+                        for 'Name' failed on the 'required' tag
   /auth/login:
     post:
       tags:
-      - Auth
-      summary: Login Auth (admin@gmail.com)
-      operationId: LoginAuth(admin@gmail.com)
-      parameters: []
+        - Auth
+      summary: Login Auth
       requestBody:
-        description: ''
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/LoginAuthadmingmail.comRequest'
-              - example:
-                  email: admin@gmail.com
-                  password: p4ssw0rd
-            example:
-              email: admin@gmail.com
-              password: p4ssw0rd
-        required: true
+              type: object
+              example:
+                email: someone@gmail.com
+                password: p4ssw0rd
       responses:
         '200':
           description: OK
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:37:57 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:37:57 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '306'
+              schema:
+                type: integer
+                example: '306'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 37f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 37f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/OK'
-                - example:
-                    success: true
-                    message: auth login success
-                    data:
-                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlYTc3OGJjLTM5NTgtNGU5Zi04ZmEyLWE4YTlhZDhmMmFiMSIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNjc2OTIxODc3fQ.tLwVf0_vWXmvLrF3p89H4lP6fEUNXcoq2LX9TIp41xQ
+                type: object
               example:
                 success: true
                 message: auth login success
                 data:
-                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlYTc3OGJjLTM5NTgtNGU5Zi04ZmEyLWE4YTlhZDhmMmFiMSIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNjc2OTIxODc3fQ.tLwVf0_vWXmvLrF3p89H4lP6fEUNXcoq2LX9TIp41xQ
+                  token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlYTc3OGJjLTM5NTgtNGU5Zi04ZmEyLWE4YTlhZDhmMmFiMSIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNjc2OTIxODc3fQ.tLwVf0_vWXmvLrF3p89H4lP6fEUNXcoq2LX9TIp41xQ
         '400':
           description: Bad Request
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:39:17 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:39:17 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '132'
+              schema:
+                type: integer
+                example: '132'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 38f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 38f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/BadRequest1'
-                - example:
-                    success: false
-                    message: validation error
-                    error:
-                    - FailedField: LoginAuthRequestBody.Password
-                      Tag: required
-                      Value: ''
+                type: object
               example:
                 success: false
                 message: validation error
                 error:
-                - FailedField: LoginAuthRequestBody.Password
-                  Tag: required
-                  Value: ''
-      deprecated: false
+                  - FailedField: LoginAuthRequestBody.Password
+                    Tag: required
+                    Value: ''
   /employees/create:
     post:
       tags:
-      - Employee
+        - Employee
       summary: Create Employee
-      operationId: CreateEmployee
-      parameters: []
       requestBody:
-        description: ''
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/CreateEmployeeRequest'
-              - example:
-                  name: ifo
-                  email: ifo@gmail.com
-                  age: 24
-                  address: Street A, City B
-                  birthday: 1999-01-01T00:00:00+07:00
-            example:
-              name: ifo
-              email: ifo@gmail.com
-              age: 24
-              address: Street A, City B
-              birthday: 1999-01-01T00:00:00+07:00
-        required: true
+              type: object
+              example:
+                name: ifo.three
+                email: ifo.three@gmail.com
+                age: 23
+                address: Street E, City F
+                birthday: '1999-01-01T00:00:00+07:00'
+      security:
+        - bearerAuth: []
       responses:
         '201':
           description: Created
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:41:26 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:41:26 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '52'
+              schema:
+                type: integer
+                example: '52'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 3cf39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 3cf39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/OK2'
-                - example:
-                    success: true
-                    message: create employee success
+                type: object
               example:
                 success: true
                 message: create employee success
@@ -217,98 +253,71 @@ paths:
           description: Bad Request
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:43:03 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:43:03 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '134'
+              schema:
+                type: integer
+                example: '134'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 3ef39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 3ef39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/BadRequest1'
-                - example:
-                    success: false
-                    message: validation error
-                    error:
-                    - FailedField: CreateEmployeeRequestBody.Email
-                      Tag: required
-                      Value: ''
+                type: object
               example:
                 success: false
                 message: validation error
                 error:
-                - FailedField: CreateEmployeeRequestBody.Email
-                  Tag: required
-                  Value: ''
+                  - FailedField: CreateEmployeeRequestBody.Email
+                    Tag: required
+                    Value: ''
         '409':
           description: Conflict
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:42:02 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:42:02 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '110'
+              schema:
+                type: integer
+                example: '110'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 3df39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 3df39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/Conflict1'
-                - example:
-                    success: false
-                    message: user already registered
-                    error:
-                      code: 409
-                      message: user already registered
+                type: object
               example:
                 success: false
                 message: user already registered
@@ -319,132 +328,87 @@ paths:
           description: Internal Server Error
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:43:43 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:43:43 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '65'
+              schema:
+                type: integer
+                example: '65'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 3ff39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 3ff39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/InternalServerError1'
-                - example:
-                    success: false
-                    message: Missing or malformed JWT
-                    error: {}
+                type: object
               example:
                 success: false
                 message: Missing or malformed JWT
                 error: {}
-      deprecated: false
-      security:
-      - bearer: []
   /employees/list:
     get:
       tags:
-      - Employee
+        - Employee
       summary: Get List Employee
-      operationId: GetListEmployee
+      security:
+        - bearerAuth: []
       parameters:
-      - name: page
-        in: query
-        description: ''
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          example: 1
-      - name: limit
-        in: query
-        description: ''
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          example: 10
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '10'
       responses:
         '200':
           description: OK
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:44:25 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:44:25 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '378'
+              schema:
+                type: integer
+                example: '378'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 40f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 40f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/OK3'
-                - example:
-                    success: true
-                    message: get list employee success
-                    meta:
-                      current_page: 1
-                      count_data_per_page: 1
-                      total_data: 1
-                      total_page: 1
-                    data:
-                    - id: fd3efa9a-6909-4f8e-8d21-c9990a790145
-                      name: ifo
-                      email: ifo@gmail.com
-                      address: Street A, City B
-                      age: 24
-                      birthday: 1998-12-31T17:00:00Z
-                      created_at: 2023-02-17T19:41:26.276Z
-                      updated_at: 2023-02-17T19:41:26.276Z
+                type: object
               example:
                 success: true
                 message: get list employee success
@@ -454,58 +418,45 @@ paths:
                   total_data: 1
                   total_page: 1
                 data:
-                - id: fd3efa9a-6909-4f8e-8d21-c9990a790145
-                  name: ifo
-                  email: ifo@gmail.com
-                  address: Street A, City B
-                  age: 24
-                  birthday: 1998-12-31T17:00:00Z
-                  created_at: 2023-02-17T19:41:26.276Z
-                  updated_at: 2023-02-17T19:41:26.276Z
+                  - id: fd3efa9a-6909-4f8e-8d21-c9990a790145
+                    name: ifo
+                    email: ifo@gmail.com
+                    address: Street A, City B
+                    age: 24
+                    birthday: '1998-12-31T17:00:00Z'
+                    created_at: '2023-02-17T19:41:26.276Z'
+                    updated_at: '2023-02-17T19:41:26.276Z'
         '404':
           description: Not Found
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:55:21 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:55:21 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '110'
+              schema:
+                type: integer
+                example: '110'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 50f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 50f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/NotFound1'
-                - example:
-                    success: false
-                    message: list employee not found
-                    error:
-                      code: 404
-                      message: list employee not found
+                type: object
               example:
                 success: false
                 message: list employee not found
@@ -516,117 +467,83 @@ paths:
           description: Internal Server Error
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:45:03 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:45:03 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '65'
+              schema:
+                type: integer
+                example: '65'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 41f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 41f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/InternalServerError1'
-                - example:
-                    success: false
-                    message: Missing or malformed JWT
-                    error: {}
+                type: object
               example:
                 success: false
                 message: Missing or malformed JWT
                 error: {}
-      deprecated: false
-      security:
-      - bearer: []
-  /employees/{id}/detail:
+  /employees/{xid}/detail:
     get:
       tags:
-      - Employee
+        - Employee
       summary: Get Employee
-      operationId: GetEmployee
+      security:
+        - bearerAuth: []
       parameters:
-      - name: id
-        in: path
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-          example: fd3efa9a-6909-4f8e-8d21-c9990a790145
+        - name: xid
+          in: path
+          schema:
+            type: string
+          required: true
+          example: a31f6116-1e01-4e0f-be1d-224d35b70cb8
       responses:
         '200':
           description: OK
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:46:15 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:46:15 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '291'
+              schema:
+                type: integer
+                example: '291'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 43f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 43f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/OK4'
-                - example:
-                    success: true
-                    message: get employee success
-                    data:
-                      id: fd3efa9a-6909-4f8e-8d21-c9990a790145
-                      name: ifo
-                      email: ifo@gmail.com
-                      address: Street A, City B
-                      age: 24
-                      birthday: 1998-12-31T17:00:00Z
-                      created_at: 2023-02-17T19:41:26.276Z
-                      updated_at: 2023-02-17T19:41:26.276Z
+                type: object
               example:
                 success: true
                 message: get employee success
@@ -636,105 +553,78 @@ paths:
                   email: ifo@gmail.com
                   address: Street A, City B
                   age: 24
-                  birthday: 1998-12-31T17:00:00Z
-                  created_at: 2023-02-17T19:41:26.276Z
-                  updated_at: 2023-02-17T19:41:26.276Z
+                  birthday: '1998-12-31T17:00:00Z'
+                  created_at: '2023-02-17T19:41:26.276Z'
+                  updated_at: '2023-02-17T19:41:26.276Z'
         '400':
           description: Bad Request
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:47:07 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:47:07 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '127'
+              schema:
+                type: integer
+                example: '127'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 44f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 44f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/BadRequest1'
-                - example:
-                    success: false
-                    message: validation error
-                    error:
-                    - FailedField: GetEmployeeRequestParams.ID
-                      Tag: uuid4
-                      Value: ''
+                type: object
               example:
                 success: false
                 message: validation error
                 error:
-                - FailedField: GetEmployeeRequestParams.ID
-                  Tag: uuid4
-                  Value: ''
+                  - FailedField: GetEmployeeRequestParams.ID
+                    Tag: uuid4
+                    Value: ''
         '404':
           description: Not Found
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:55:43 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:55:43 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '100'
+              schema:
+                type: integer
+                example: '100'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 51f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 51f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/NotFound1'
-                - example:
-                    success: false
-                    message: employee not found
-                    error:
-                      code: 404
-                      message: employee not found
+                type: object
               example:
                 success: false
                 message: employee not found
@@ -745,124 +635,92 @@ paths:
           description: Internal Server Error
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:47:58 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:47:58 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '65'
+              schema:
+                type: integer
+                example: '65'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 46f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 46f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/InternalServerError1'
-                - example:
-                    success: false
-                    message: Missing or malformed JWT
-                    error: {}
+                type: object
               example:
                 success: false
                 message: Missing or malformed JWT
                 error: {}
-      deprecated: false
-      security:
-      - bearer: []
-  /employees/{id}/update:
+  /employees/{xid}/update:
     patch:
       tags:
-      - Employee
+        - Employee
       summary: Update Employee
-      operationId: UpdateEmployee
-      parameters:
-      - name: id
-        in: path
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-          example: fd3efa9a-6909-4f8e-8d21-c9990a790145
       requestBody:
-        description: ''
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/UpdateEmployeeRequest'
-              - example:
-                  age: 25
-                  address: Street B, City C
-                  birthday: 1999-02-02T00:00:00+07:00
-            example:
-              age: 25
-              address: Street B, City C
-              birthday: 1999-02-02T00:00:00+07:00
-        required: true
+              type: object
+              example:
+                age: 25
+                address: Street B, City C
+                birthday: '1999-02-02T00:00:00+07:00'
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: xid
+          in: path
+          schema:
+            type: string
+          required: true
+          example: b83aadd4-8863-4316-a767-cc7a35689d6b
       responses:
         '200':
           description: OK
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:48:54 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:48:54 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '52'
+              schema:
+                type: integer
+                example: '52'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 47f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 47f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/OK2'
-                - example:
-                    success: true
-                    message: update employee success
+                type: object
               example:
                 success: true
                 message: update employee success
@@ -870,98 +728,71 @@ paths:
           description: Bad Request
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:49:19 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:49:19 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '130'
+              schema:
+                type: integer
+                example: '130'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 48f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 48f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/BadRequest1'
-                - example:
-                    success: false
-                    message: validation error
-                    error:
-                    - FailedField: UpdateEmployeeRequestParams.ID
-                      Tag: uuid4
-                      Value: ''
+                type: object
               example:
                 success: false
                 message: validation error
                 error:
-                - FailedField: UpdateEmployeeRequestParams.ID
-                  Tag: uuid4
-                  Value: ''
+                  - FailedField: UpdateEmployeeRequestParams.ID
+                    Tag: uuid4
+                    Value: ''
         '404':
           description: Not Found
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:57:50 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:57:50 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '100'
+              schema:
+                type: integer
+                example: '100'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 268f48e8-bce3-4db9-8f27-1251fa4fd3b3
+              schema:
+                type: string
+                example: 268f48e8-bce3-4db9-8f27-1251fa4fd3b3
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/NotFound1'
-                - example:
-                    success: false
-                    message: employee not found
-                    error:
-                      code: 404
-                      message: employee not found
+                type: object
               example:
                 success: false
                 message: employee not found
@@ -972,108 +803,83 @@ paths:
           description: Internal Server Error
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:50:07 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:50:07 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '65'
+              schema:
+                type: integer
+                example: '65'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 49f39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 49f39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/InternalServerError1'
-                - example:
-                    success: false
-                    message: Missing or malformed JWT
-                    error: {}
+                type: object
               example:
                 success: false
                 message: Missing or malformed JWT
                 error: {}
-      deprecated: false
-      security:
-      - bearer: []
-  /employees/{id}/delete:
+  /employees/{xid}/delete:
     delete:
       tags:
-      - Employee
+        - Employee
       summary: Delete Employee
-      operationId: DeleteEmployee
+      security:
+        - bearerAuth: []
       parameters:
-      - name: id
-        in: path
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-          example: fd3efa9a-6909-4f8e-8d21-c9990a790145
+        - name: xid
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 1b304b42-2537-4f97-99ee-e5897d9faefb
       responses:
         '200':
           description: OK
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:51:11 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:51:11 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '52'
+              schema:
+                type: integer
+                example: '52'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 4af39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 4af39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/OK2'
-                - example:
-                    success: true
-                    message: delete employee success
+                type: object
               example:
                 success: true
                 message: delete employee success
@@ -1081,98 +887,71 @@ paths:
           description: Bad Request
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:51:31 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:51:31 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '130'
+              schema:
+                type: integer
+                example: '130'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 4bf39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 4bf39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/BadRequest1'
-                - example:
-                    success: false
-                    message: validation error
-                    error:
-                    - FailedField: DeleteEmployeeRequestParams.ID
-                      Tag: uuid4
-                      Value: ''
+                type: object
               example:
                 success: false
                 message: validation error
                 error:
-                - FailedField: DeleteEmployeeRequestParams.ID
-                  Tag: uuid4
-                  Value: ''
+                  - FailedField: DeleteEmployeeRequestParams.ID
+                    Tag: uuid4
+                    Value: ''
         '404':
           description: Not Found
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:58:10 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:58:10 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '100'
+              schema:
+                type: integer
+                example: '100'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 278f48e8-bce3-4db9-8f27-1251fa4fd3b3
+              schema:
+                type: string
+                example: 278f48e8-bce3-4db9-8f27-1251fa4fd3b3
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/NotFound1'
-                - example:
-                    success: false
-                    message: employee not found
-                    error:
-                      code: 404
-                      message: employee not found
+                type: object
               example:
                 success: false
                 message: employee not found
@@ -1183,403 +962,34 @@ paths:
           description: Internal Server Error
           headers:
             Date:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Fri, 17 Feb 2023 19:51:59 GMT
+              schema:
+                type: string
+                example: Fri, 17 Feb 2023 19:51:59 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
             Content-Length:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '65'
+              schema:
+                type: integer
+                example: '65'
             X-Request-Id:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: 4cf39668-33a8-4ce1-bb75-4dd8eaaa39ed
+              schema:
+                type: string
+                example: 4cf39668-33a8-4ce1-bb75-4dd8eaaa39ed
             Vary:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: Origin
+              schema:
+                type: string
+                example: Origin
             Access-Control-Allow-Origin:
-              content:
-                text/plain:
-                  schema:
-                    type: string
-                  example: '*'
+              schema:
+                type: string
+                example: '*'
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/InternalServerError1'
-                - example:
-                    success: false
-                    message: Missing or malformed JWT
-                    error: {}
+                type: object
               example:
                 success: false
                 message: Missing or malformed JWT
                 error: {}
-      deprecated: false
-      security:
-      - bearer: []
-components:
-  schemas:
-    LoginAuthadmingmail.comRequest:
-      title: LoginAuthadmingmail.comRequest
-      required:
-      - email
-      - password
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      example:
-        email: admin@gmail.com
-        password: p4ssw0rd
-    OK:
-      title: OK
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          $ref: '#/components/schemas/Data'
-      example:
-        success: true
-        message: auth login success
-        data:
-          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlYTc3OGJjLTM5NTgtNGU5Zi04ZmEyLWE4YTlhZDhmMmFiMSIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNjc2OTIxODc3fQ.tLwVf0_vWXmvLrF3p89H4lP6fEUNXcoq2LX9TIp41xQ
-    Data:
-      title: Data
-      required:
-      - token
-      type: object
-      properties:
-        token:
-          type: string
-      example:
-        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlYTc3OGJjLTM5NTgtNGU5Zi04ZmEyLWE4YTlhZDhmMmFiMSIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNjc2OTIxODc3fQ.tLwVf0_vWXmvLrF3p89H4lP6fEUNXcoq2LX9TIp41xQ
-    Error:
-      title: Error
-      required:
-      - FailedField
-      - Tag
-      - Value
-      type: object
-      properties:
-        FailedField:
-          type: string
-        Tag:
-          type: string
-        Value:
-          type: string
-      example:
-        FailedField: LoginAuthRequestBody.Password
-        Tag: required
-        Value: ''
-    BadRequest1:
-      title: BadRequest1
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        error:
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-          description: ''
-      example:
-        success: false
-        message: validation error
-        error:
-        - FailedField: LoginAuthRequestBody.Password
-          Tag: required
-          Value: ''
-    LoginAuthnon-admingmail.comRequest:
-      title: LoginAuthnon-admingmail.comRequest
-      required:
-      - email
-      - password
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      example:
-        email: non-admin@gmail.com
-        password: p4ssw0rd
-    CreateEmployeeRequest:
-      title: CreateEmployeeRequest
-      required:
-      - name
-      - email
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        age:
-          type: integer
-          format: int32
-        address:
-          type: string
-        birthday:
-          type: string
-      example:
-        name: ifo
-        email: ifo@gmail.com
-        age: 24
-        address: Street A, City B
-        birthday: 1999-01-01T00:00:00+07:00
-    OK2:
-      title: OK2
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-      example:
-        success: true
-        message: create employee success
-    Error6:
-      title: Error6
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-      example:
-        code: 409
-        message: user already registered
-    Conflict1:
-      title: Conflict1
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        error:
-          $ref: '#/components/schemas/Error6'
-      example:
-        success: false
-        message: user already registered
-        error:
-          code: 409
-          message: user already registered
-    InternalServerError1:
-      title: InternalServerError1
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        error:
-          type: object
-      example:
-        success: false
-        message: Missing or malformed JWT
-        error: {}
-    OK3:
-      title: OK3
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Data2'
-          description: ''
-      example:
-        success: true
-        message: get list employee success
-        meta:
-          current_page: 1
-          count_data_per_page: 1
-          total_data: 1
-          total_page: 1
-        data:
-        - id: fd3efa9a-6909-4f8e-8d21-c9990a790145
-          name: ifo
-          email: ifo@gmail.com
-          address: Street A, City B
-          age: 24
-          birthday: 1998-12-31T17:00:00Z
-          created_at: 2023-02-17T19:41:26.276Z
-          updated_at: 2023-02-17T19:41:26.276Z
-    Meta:
-      title: Meta
-      required:
-      - current_page
-      - count_data_per_page
-      - total_data
-      - total_page
-      type: object
-      properties:
-        current_page:
-          type: integer
-          format: int32
-        count_data_per_page:
-          type: integer
-          format: int32
-        total_data:
-          type: integer
-          format: int32
-        total_page:
-          type: integer
-          format: int32
-      example:
-        current_page: 1
-        count_data_per_page: 1
-        total_data: 1
-        total_page: 1
-    Data2:
-      title: Data2
-      required:
-      - id
-      - name
-      - email
-      - address
-      - age
-      - birthday
-      - created_at
-      - updated_at
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-        address:
-          type: string
-        age:
-          type: integer
-          format: int32
-        birthday:
-          type: string
-        created_at:
-          type: string
-        updated_at:
-          type: string
-      example:
-        id: fd3efa9a-6909-4f8e-8d21-c9990a790145
-        name: ifo
-        email: ifo@gmail.com
-        address: Street A, City B
-        age: 24
-        birthday: 1998-12-31T17:00:00Z
-        created_at: 2023-02-17T19:41:26.276Z
-        updated_at: 2023-02-17T19:41:26.276Z
-    NotFound1:
-      title: NotFound1
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        error:
-          $ref: '#/components/schemas/Error6'
-      example:
-        success: false
-        message: list employee not found
-        error:
-          code: 404
-          message: list employee not found
-    OK4:
-      title: OK4
-      required:
-      - success
-      - message
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          $ref: '#/components/schemas/Data2'
-      example:
-        success: true
-        message: get employee success
-        data:
-          id: fd3efa9a-6909-4f8e-8d21-c9990a790145
-          name: ifo
-          email: ifo@gmail.com
-          address: Street A, City B
-          age: 24
-          birthday: 1998-12-31T17:00:00Z
-          created_at: 2023-02-17T19:41:26.276Z
-          updated_at: 2023-02-17T19:41:26.276Z
-    UpdateEmployeeRequest:
-      title: UpdateEmployeeRequest
-      type: object
-      properties:
-        age:
-          type: integer
-          format: int32
-        address:
-          type: string
-        birthday:
-          type: string
-      example:
-        age: 25
-        address: Street B, City C
-        birthday: 1999-02-02T00:00:00+07:00
-  securitySchemes:
-    bearer:
-      type: http
-      scheme: bearer
-security: []
-tags:
-- name: Auth
-- name: Employee

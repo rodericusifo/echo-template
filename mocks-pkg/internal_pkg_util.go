@@ -5,5 +5,8 @@ import (
 )
 
 var (
-	GenerateHashPasswordUtil = util.GenerateHashPassword
+	GenerateHashPasswordUtil       = util.GenerateHashPassword
+	GenerateJWTTokenFromClaimsUtil = util.GenerateJWTTokenFromClaims
+
+	CheckHashPasswordUtil = util.CheckHashPassword
 )

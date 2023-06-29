@@ -15,6 +15,20 @@ type IUserResource struct {
 	mock.Mock
 }
 
+// CreateUser provides a mock function with given fields: payload
+func (_m *IUserResource) CreateUser(payload *sql.User) error {
+	ret := _m.Called(payload)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*sql.User) error); ok {
+		r0 = rf(payload)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // GetUser provides a mock function with given fields: query
 func (_m *IUserResource) GetUser(query *types.Query) (*sql.User, error) {
 	ret := _m.Called(query)

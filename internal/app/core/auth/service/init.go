@@ -7,6 +7,7 @@ import (
 )
 
 type IAuthService interface {
+	RegisterAuth(payload *input.RegisterAuthDTO) error
 	LoginAuth(payload *input.LoginAuthDTO) (*output.LoginAuthDTO, error)
 }
 

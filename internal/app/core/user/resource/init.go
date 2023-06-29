@@ -7,6 +7,7 @@ import (
 )
 
 type IUserResource interface {
+	CreateUser(payload *sql.User) error
 	GetUser(query *types.Query) (*sql.User, error)
 }
 

@@ -40,6 +40,20 @@ func (_m *IAuthService) LoginAuth(payload *input.LoginAuthDTO) (*output.LoginAut
 	return r0, r1
 }
 
+// RegisterAuth provides a mock function with given fields: payload
+func (_m *IAuthService) RegisterAuth(payload *input.RegisterAuthDTO) error {
+	ret := _m.Called(payload)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(*input.RegisterAuthDTO) error); ok {
+		r0 = rf(payload)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 type mockConstructorTestingTNewIAuthService interface {
 	mock.TestingT
 	Cleanup(func())

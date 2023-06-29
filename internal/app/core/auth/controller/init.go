@@ -17,5 +17,6 @@ func InitAuthController(authService service.IAuthService) *AuthController {
 }
 
 func (authController *AuthController) Mount(group *echo.Group) {
+	group.POST("/register", authController.RegisterAuth)
 	group.POST("/login", authController.LoginAuth)
 }
