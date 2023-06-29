@@ -28,15 +28,9 @@ func (s *EmployeeService) UpdateEmployee(payload *input.UpdateEmployeeDTO) error
 
 	employeeModel := employeeModelRes
 
-	if payload.Address != nil {
-		employeeModel.Address = payload.Address
-	}
-	if payload.Age != nil {
-		employeeModel.Age = payload.Age
-	}
-	if payload.Birthday != nil {
-		employeeModel.Birthday = payload.Birthday
-	}
+	employeeModel.Address = payload.Address
+	employeeModel.Age = payload.Age
+	employeeModel.Birthday = payload.Birthday
 
 	err = s.EmployeeResource.UpdateEmployee(employeeModel)
 	if err != nil {
