@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -35,7 +34,7 @@ func main() {
 		middleware.RequestID(),
 		middleware.LoggerWithConfig(middleware.LoggerConfig{
 			Format:           "[${time_custom}] ${remote_ip} | ${id} | ${status} | ${latency_human} | ${method} | ${path}\n",
-			CustomTimeFormat: time.TimeOnly,
+			CustomTimeFormat: "15:04:05",
 			Output:           e.Logger.Output(),
 		}),
 		middleware.Recover(),

@@ -34,8 +34,14 @@ run-dev: gen-wire
 	@echo "$(call log_action,Run Program)"
 	go run cmd/main.go -env dev
 
+run-build-dev: gen-wire
+	@echo "$(call log_action,Build Program)"
+	go build -o dist/main cmd/main.go
+	@echo "$(call log_action,Run Built Program)"
+	dist/main -env dev
+
 run-build-docker: gen-wire
 	@echo "$(call log_action,Build Program)"
-	go build -o /build cmd/main.go
+	go build -o dist/main cmd/main.go
 	@echo "$(call log_action,Run Built Program)"
-	/build -env docker
+	dist/main -env docker
