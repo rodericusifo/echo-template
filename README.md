@@ -53,7 +53,7 @@ docker compose --env-file environments/docker.application.env up -d
 Run this command
 
 ```properties
-make run-dev
+make start-dev
 ```
 
 ## DOCUMENTATION
@@ -73,7 +73,7 @@ go install github.com/vektra/mockery/v2@v2.20.0
 - Step 2: Run this command
 
 ```properties
-make run-test-cover
+make test-cover
 ```
 
 ## NOTE

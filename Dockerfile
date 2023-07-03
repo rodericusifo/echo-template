@@ -21,9 +21,10 @@ RUN go get -d -v ./...
 # Install the package
 RUN go install github.com/google/wire/cmd/wire@latest
 RUN go install -v ./...
+RUN make build
 
 # Expose port 8081
 EXPOSE 8081
 
 # Run the executable
-CMD [ "make", "run-build-docker" ]
+CMD [ "dist/main", "-env", "docker" ]
