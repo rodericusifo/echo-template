@@ -11,7 +11,7 @@ func (r *PostgresEmployeeDatabaseSQLRepository) CountAllEmployee(query *types.Qu
 	employees := make([]*sql.Employee, 0)
 	tableName := sql.Employee{}.TableName()
 
-	q := r.db.Table(tableName)
+	q := r.db
 
 	querySlice := util.GenerateSQLSelectQuerySlice(
 		tableName,
@@ -22,13 +22,10 @@ func (r *PostgresEmployeeDatabaseSQLRepository) CountAllEmployee(query *types.Qu
 	q = q.Select(querySlice)
 
 	if query != nil {
-		if len(query.Searches) > 0 {
-			queryString, bindValues := util.GenerateSQLWhereQueryStringAndBindValues(tableName, query.Searches)
-			q = q.Where(queryString, bindValues...)
-		}
+		q = util.BuildQuery(tableName, q, query)
 	}
 
-	q = q.Find(&employees)
+	q = q.Table(tableName).Find(&employees)
 
 	if err := q.Error; err != nil {
 		return count, err

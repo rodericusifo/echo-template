@@ -8,13 +8,13 @@ func (r *PostgresEmployeeDatabaseSQLRepository) CreateEmployee(payload *sql.Empl
 	employee := new(sql.Employee)
 	tableName := sql.Employee{}.TableName()
 
-	q := r.db.Table(tableName)
+	q := r.db
 
 	if payload != nil {
 		employee = payload
 	}
 
-	if err := q.Save(employee).Error; err != nil {
+	if err := q.Table(tableName).Save(employee).Error; err != nil {
 		return err
 	}
 
