@@ -16,8 +16,8 @@ endef
 
 gen-wire:
 	@echo "$(call log_action,Generate Wire)"
-	wire wire/core/controller/auth/wire.go
-	wire wire/core/controller/employee/wire.go
+	wire wire/core/service/auth/wire.go
+	wire wire/core/service/employee/wire.go
 	wire wire/core/resource/user/wire.go
 gen-mock:
 	@echo "$(call log_action,Generate Mock)"

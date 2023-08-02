@@ -7,7 +7,6 @@
 package auth
 
 import (
-	"github.com/rodericusifo/echo-template/internal/app/core/auth/controller"
 	"github.com/rodericusifo/echo-template/internal/app/core/auth/service"
 	"github.com/rodericusifo/echo-template/internal/app/core/user/resource"
 	"github.com/rodericusifo/echo-template/internal/app/repository/database/sql/user"
@@ -16,11 +15,10 @@ import (
 
 // Injectors from wire.go:
 
-func AuthController() *controller.AuthController {
+func AuthService() service.IAuthService {
 	postgresDBSQLConnection := util.GetPostgresDBConnection()
 	iUserDatabaseSQLRepository := user.InitPostgresUserDatabaseSQLRepository(postgresDBSQLConnection)
 	iUserResource := resource.InitUserResource(iUserDatabaseSQLRepository)
 	iAuthService := service.InitAuthService(iUserResource)
-	authController := controller.InitAuthController(iAuthService)
-	return authController
+	return iAuthService
 }

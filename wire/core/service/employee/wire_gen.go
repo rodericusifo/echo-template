@@ -7,7 +7,6 @@
 package employee
 
 import (
-	"github.com/rodericusifo/echo-template/internal/app/core/employee/controller"
 	"github.com/rodericusifo/echo-template/internal/app/core/employee/resource"
 	"github.com/rodericusifo/echo-template/internal/app/core/employee/service"
 	"github.com/rodericusifo/echo-template/internal/app/repository/database/sql/employee"
@@ -16,11 +15,10 @@ import (
 
 // Injectors from wire.go:
 
-func EmployeeController() *controller.EmployeeController {
+func EmployeeService() service.IEmployeeService {
 	postgresDBSQLConnection := util.GetPostgresDBConnection()
 	iEmployeeDatabaseSQLRepository := employee.InitPostgresEmployeeDatabaseSQLRepository(postgresDBSQLConnection)
 	iEmployeeResource := resource.InitEmployeeResource(iEmployeeDatabaseSQLRepository)
 	iEmployeeService := service.InitEmployeeService(iEmployeeResource)
-	employeeController := controller.InitEmployeeController(iEmployeeService)
-	return employeeController
+	return iEmployeeService
 }
