@@ -36,13 +36,7 @@ func TestPostgresEmployeeDatabaseSQLRepository_CountAllEmployee(t *testing.T) {
 		{
 			desc: "[ERROR]_because_something_error_happens",
 			input: args{
-				query: &types.Query{
-					Searches: [][]types.SearchOperation{
-						{
-							{Field: "user_id", Operator: "=", Value: uint(1)},
-						},
-					},
-				},
+				query: nil,
 			},
 			output: result{
 				count: 0,
@@ -50,15 +44,11 @@ func TestPostgresEmployeeDatabaseSQLRepository_CountAllEmployee(t *testing.T) {
 			},
 			before: func() {
 				{
-					var (
-						arg1 = 1
-					)
 					mockQuery.ExpectQuery(
 						regexp.QuoteMeta(
-							`SELECT "employees"."id" FROM "employees" WHERE "employees"."user_id" = $1 AND "employees"."deleted_at" IS NULL`,
+							`SELECT "employees"."id" FROM "employees" WHERE "employees"."deleted_at" IS NULL`,
 						),
 					).
-						WithArgs(arg1).
 						WillReturnError(errors.New("something error"))
 				}
 			},

@@ -31,24 +31,19 @@ func (s *UserDatabaseSeederSQLRepository) Seed(db *gorm.DB) error {
 
 		q := db
 
-		querySlice := util.GenerateSQLSelectQuerySlice(
-			tableName,
-			[]types.SelectOperation{
+		query := &types.Query{
+			Selects: []types.SelectOperation{
 				{Field: "id"},
 			},
-		)
-		q = q.Select(querySlice)
-
-		queryString, bindValues := util.GenerateSQLWhereQueryStringAndBindValues(
-			tableName,
-			[][]types.SearchOperation{
+			Searches: [][]types.SearchOperation{
 				{
 					{Field: "xid", Operator: "=", Value: UserSeed.XID},
 					{Field: "email", Operator: "=", Value: UserSeed.Email},
 				},
 			},
-		)
-		q = q.Where(queryString, bindValues...)
+		}
+
+		q = util.BuildQuery(tableName, q, query)
 
 		err = q.Table(tableName).First(user).Error
 

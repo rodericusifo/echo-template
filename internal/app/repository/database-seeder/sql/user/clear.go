@@ -17,23 +17,18 @@ func (s *UserDatabaseSeederSQLRepository) Clear(db *gorm.DB) error {
 
 	q := db
 
-	querySlice := util.GenerateSQLSelectQuerySlice(
-		tableName,
-		[]types.SelectOperation{
+	query := &types.Query{
+		Selects: []types.SelectOperation{
 			{Field: "id"},
 		},
-	)
-	q = q.Select(querySlice)
-
-	queryString, bindValues := util.GenerateSQLWhereQueryStringAndBindValues(
-		tableName,
-		[][]types.SearchOperation{
+		Searches: [][]types.SearchOperation{
 			{
 				{Field: "role", Operator: "=", Value: constant.ADMIN},
 			},
 		},
-	)
-	q = q.Where(queryString, bindValues...)
+	}
+
+	q = util.BuildQuery(tableName, q, query)
 
 	if err := q.Table(tableName).Find(&users).Error; err != nil {
 		return err

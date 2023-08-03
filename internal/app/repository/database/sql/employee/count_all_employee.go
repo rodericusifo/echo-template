@@ -13,16 +13,17 @@ func (r *PostgresEmployeeDatabaseSQLRepository) CountAllEmployee(query *types.Qu
 
 	q := r.db
 
-	querySlice := util.GenerateSQLSelectQuerySlice(
-		tableName,
-		[]types.SelectOperation{
+	defaultQuery := &types.Query{
+		Selects: []types.SelectOperation{
 			{Field: "id"},
 		},
-	)
-	q = q.Select(querySlice)
+	}
 
 	if query != nil {
+		query.Selects = append(query.Selects, defaultQuery.Selects...)
 		q = util.BuildQuery(tableName, q, query)
+	} else {
+		q = util.BuildQuery(tableName, q, defaultQuery)
 	}
 
 	q = q.Table(tableName).Find(&employees)
