@@ -15,7 +15,7 @@ func (s *UserDatabaseSeederSQLRepository) Clear(db *gorm.DB) error {
 	users := make([]*sql.User, 0)
 	tableName := sql.User{}.TableName()
 
-	q := db.Table(tableName)
+	q := db
 
 	querySlice := util.GenerateSQLSelectQuerySlice(
 		tableName,
@@ -35,7 +35,7 @@ func (s *UserDatabaseSeederSQLRepository) Clear(db *gorm.DB) error {
 	)
 	q = q.Where(queryString, bindValues...)
 
-	if err := q.Find(&users).Error; err != nil {
+	if err := q.Table(tableName).Find(&users).Error; err != nil {
 		return err
 	}
 

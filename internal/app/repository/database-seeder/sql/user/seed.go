@@ -29,7 +29,7 @@ func (s *UserDatabaseSeederSQLRepository) Seed(db *gorm.DB) error {
 		user := new(sql.User)
 		tableName := sql.User{}.TableName()
 
-		q := db.Table(tableName)
+		q := db
 
 		querySlice := util.GenerateSQLSelectQuerySlice(
 			tableName,
@@ -50,7 +50,7 @@ func (s *UserDatabaseSeederSQLRepository) Seed(db *gorm.DB) error {
 		)
 		q = q.Where(queryString, bindValues...)
 
-		err = q.First(user).Error
+		err = q.Table(tableName).First(user).Error
 
 		if err != nil && err != gorm.ErrRecordNotFound {
 			log.WithFields(log.Fields{
