@@ -13,9 +13,10 @@ func GenerateSQLSelectQuerySlice(tableAlias string, selects []types.SelectOperat
 
 	for _, s := range selects {
 		fieldSelectStr := ""
-		if s.Operator != "" {
-			opt := strings.Split(s.Operator, "()")[0]
-			fieldSelectStr = fmt.Sprintf(`%s("%s"."%s")`, opt, tableAlias, s.Field)
+		if s.Function != "" {
+			function := s.Function
+			fieldStr := fmt.Sprintf(`"%s"."%s"`, tableAlias, s.Field)
+			fieldSelectStr = strings.Replace(function, "$", fieldStr, -1)
 		} else {
 			fieldSelectStr = fmt.Sprintf(`"%s"."%s"`, tableAlias, s.Field)
 		}
@@ -76,9 +77,10 @@ func GenerateSQLGroupQueryString(tableAlias string, groups []types.GroupOperatio
 
 	for _, group := range groups {
 		fieldSelectStr := ""
-		if group.Operator != "" {
-			opt := strings.Split(group.Operator, "()")[0]
-			fieldSelectStr = fmt.Sprintf(`%s("%s"."%s")`, opt, tableAlias, group.Field)
+		if group.Function != "" {
+			function := group.Function
+			fieldStr := fmt.Sprintf(`"%s"."%s"`, tableAlias, group.Field)
+			fieldSelectStr = strings.Replace(function, "$", fieldStr, -1)
 		} else {
 			fieldSelectStr = fmt.Sprintf(`"%s"."%s"`, tableAlias, group.Field)
 		}

@@ -2,8 +2,8 @@ package types
 
 type SelectOperation struct {
 	Field    string
-	Operator string
 	Alias    string
+	Function string
 }
 
 type SearchOperation struct {
@@ -25,17 +25,17 @@ type OrderOperation struct {
 
 type GroupOperation struct {
 	Field    string
-	Operator string
+	Function string
 }
 
 type Query struct {
-	WithDeleted bool
-	Distinct    bool
 	Selects     []SelectOperation
 	Searches    [][]SearchOperation
 	Joins       []JoinOperation
 	Orders      []OrderOperation
 	Groups      []GroupOperation
-	Offset      int
+	Distinct    bool
+	WithDeleted bool
 	Limit       int
+	Offset      int
 }

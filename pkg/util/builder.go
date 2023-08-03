@@ -9,7 +9,7 @@ import (
 
 func BuildQuery(tableName string, db *gorm.DB, query *types.Query) *gorm.DB {
 	q := db
-	
+
 	if len(query.Selects) > 0 {
 		querySlice := GenerateSQLSelectQuerySlice(tableName, MergeSlices(true, query.Selects, constant.DEFAULT_SELECT_COLUMNS))
 		if query.Distinct {
@@ -52,14 +52,14 @@ func BuildQuery(tableName string, db *gorm.DB, query *types.Query) *gorm.DB {
 		queryString := GenerateSQLGroupQueryString(tableName, query.Groups)
 		q = q.Group(queryString)
 	}
+	if query.WithDeleted {
+		q = q.Unscoped()
+	}
 	if query.Limit != 0 {
 		q = q.Limit(query.Limit)
 	}
 	if query.Offset != 0 {
 		q = q.Offset(query.Offset)
-	}
-	if query.WithDeleted {
-		q = q.Unscoped()
 	}
 
 	return q
