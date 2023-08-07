@@ -54,7 +54,7 @@ func (s *UserDatabaseSeederSQLRepository) Seed(db *gorm.DB) error {
 			}).Errorln("[USER DATABASE SEEDER SQL REPOSITORY] [SEED]")
 			continue
 		}
-		if *user != (sql.User{}) {
+		if user.ID != 0 {
 			log.WithFields(log.Fields{
 				"message": fmt.Sprintf("user with xid %s and email %s already registered", UserSeed.XID, UserSeed.Email),
 			}).Errorln("[USER DATABASE SEEDER SQL REPOSITORY] [SEED]")
