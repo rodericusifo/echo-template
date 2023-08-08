@@ -45,19 +45,19 @@ func (_m *IEmployeeService) DeleteEmployee(payload *input.DeleteEmployeeDTO) err
 }
 
 // GetEmployee provides a mock function with given fields: payload
-func (_m *IEmployeeService) GetEmployee(payload *input.GetEmployeeDTO) (*output.EmployeeDTO, error) {
+func (_m *IEmployeeService) GetEmployee(payload *input.GetEmployeeDTO) (output.GetEmployeeDTO, error) {
 	ret := _m.Called(payload)
 
-	var r0 *output.EmployeeDTO
+	var r0 output.GetEmployeeDTO
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*input.GetEmployeeDTO) (*output.EmployeeDTO, error)); ok {
+	if rf, ok := ret.Get(0).(func(*input.GetEmployeeDTO) (output.GetEmployeeDTO, error)); ok {
 		return rf(payload)
 	}
-	if rf, ok := ret.Get(0).(func(*input.GetEmployeeDTO) *output.EmployeeDTO); ok {
+	if rf, ok := ret.Get(0).(func(*input.GetEmployeeDTO) output.GetEmployeeDTO); ok {
 		r0 = rf(payload)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*output.EmployeeDTO)
+			r0 = ret.Get(0).(output.GetEmployeeDTO)
 		}
 	}
 
@@ -71,20 +71,20 @@ func (_m *IEmployeeService) GetEmployee(payload *input.GetEmployeeDTO) (*output.
 }
 
 // GetListEmployee provides a mock function with given fields: payload
-func (_m *IEmployeeService) GetListEmployee(payload *input.GetListEmployeeDTO) ([]*output.EmployeeDTO, *structs.Meta, error) {
+func (_m *IEmployeeService) GetListEmployee(payload *input.GetListEmployeeDTO) (output.GetListEmployeeDTO, *structs.Meta, error) {
 	ret := _m.Called(payload)
 
-	var r0 []*output.EmployeeDTO
+	var r0 output.GetListEmployeeDTO
 	var r1 *structs.Meta
 	var r2 error
-	if rf, ok := ret.Get(0).(func(*input.GetListEmployeeDTO) ([]*output.EmployeeDTO, *structs.Meta, error)); ok {
+	if rf, ok := ret.Get(0).(func(*input.GetListEmployeeDTO) (output.GetListEmployeeDTO, *structs.Meta, error)); ok {
 		return rf(payload)
 	}
-	if rf, ok := ret.Get(0).(func(*input.GetListEmployeeDTO) []*output.EmployeeDTO); ok {
+	if rf, ok := ret.Get(0).(func(*input.GetListEmployeeDTO) output.GetListEmployeeDTO); ok {
 		r0 = rf(payload)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]*output.EmployeeDTO)
+			r0 = ret.Get(0).(output.GetListEmployeeDTO)
 		}
 	}
 

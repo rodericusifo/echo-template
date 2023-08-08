@@ -26,7 +26,7 @@ func TestEmployeeService_GetListEmployee(t *testing.T) {
 			payload *input.GetListEmployeeDTO
 		}
 		result struct {
-			value []*output.EmployeeDTO
+			value output.GetListEmployeeDTO
 			meta  *structs.Meta
 			err   error
 		}

@@ -12,7 +12,7 @@ import (
 	"github.com/rodericusifo/echo-template/pkg/types"
 )
 
-func (s *EmployeeService) GetEmployee(payload *input.GetEmployeeDTO) (*output.EmployeeDTO, error) {
+func (s *EmployeeService) GetEmployee(payload *input.GetEmployeeDTO) (output.GetEmployeeDTO, error) {
 	employeeModelRes, err := s.EmployeeResource.GetEmployee(&types.Query{
 		Searches: [][]types.SearchOperation{
 			{

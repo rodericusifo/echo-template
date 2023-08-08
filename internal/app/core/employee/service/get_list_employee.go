@@ -13,7 +13,7 @@ import (
 	"github.com/rodericusifo/echo-template/pkg/util"
 )
 
-func (s *EmployeeService) GetListEmployee(payload *input.GetListEmployeeDTO) ([]*output.EmployeeDTO, *structs.Meta, error) {
+func (s *EmployeeService) GetListEmployee(payload *input.GetListEmployeeDTO) (output.GetListEmployeeDTO, *structs.Meta, error) {
 	page, limit := util.DefinePageLimitPagination(payload.Page, payload.Limit)
 
 	employeeListModelRes, countEmployeeListModelRes, err := s.EmployeeResource.GetListEmployeeAndCount(&types.Query{

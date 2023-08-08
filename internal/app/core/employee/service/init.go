@@ -11,8 +11,8 @@ type IEmployeeService interface {
 	CreateEmployee(payload *input.CreateEmployeeDTO) error
 	UpdateEmployee(payload *input.UpdateEmployeeDTO) error
 	DeleteEmployee(payload *input.DeleteEmployeeDTO) error
-	GetListEmployee(payload *input.GetListEmployeeDTO) ([]*output.EmployeeDTO, *structs.Meta, error)
-	GetEmployee(payload *input.GetEmployeeDTO) (*output.EmployeeDTO, error)
+	GetListEmployee(payload *input.GetListEmployeeDTO) (output.GetListEmployeeDTO, *structs.Meta, error)
+	GetEmployee(payload *input.GetEmployeeDTO) (output.GetEmployeeDTO, error)
 }
 
 type EmployeeService struct {

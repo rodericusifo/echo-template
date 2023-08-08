@@ -73,8 +73,8 @@ func TestEmployeeController_GetEmployee(t *testing.T) {
 						}
 					)
 					var (
-						result *output.EmployeeDTO = nil
-						err    error               = errors.New("unexpected errors")
+						result output.GetEmployeeDTO = nil
+						err    error                 = errors.New("unexpected errors")
 					)
 					mockEmployeeService.On("GetEmployee", arg1).Return(result, err).Once()
 				}
@@ -111,7 +111,7 @@ func TestEmployeeController_GetEmployee(t *testing.T) {
 						}
 					)
 					var (
-						result *output.EmployeeDTO = &output.EmployeeDTO{
+						result output.GetEmployeeDTO = &output.EmployeeDTO{
 							XID:       mockUUID,
 							Name:      "John",
 							Email:     "John@gmail.com",
