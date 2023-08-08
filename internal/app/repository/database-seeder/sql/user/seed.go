@@ -64,7 +64,7 @@ func (s *UserDatabaseSeederSQLRepository) Seed(db *gorm.DB) error {
 		hashedPassword, err := mocks_pkg.GenerateHashPasswordUtil(UserSeed.Password)
 		if err != nil {
 			log.WithFields(log.Fields{
-				"message": "hashing password fail",
+				"message": fmt.Sprintf("hash password fail: user with xid %s", UserSeed.XID),
 				"detail":  err,
 			}).Errorln("[USER DATABASE SEEDER SQL REPOSITORY] [SEED]")
 			continue
